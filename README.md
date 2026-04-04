@@ -67,4 +67,4 @@ Année académique : **2025–2026**
 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/username/Esprit-PW-2A20-2526-NutriSmart.git
+git clone https://github.com/tasnimeabidi/Esprit-PW-2A20-2526-NutriSmart.git
