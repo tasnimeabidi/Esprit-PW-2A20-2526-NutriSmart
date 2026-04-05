@@ -1,0 +1,95 @@
+.budget-hero-wrap {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.budget-hero {
+  position: relative;
+  height: 200px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f') center/cover;
+}
+
+.budget-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+}
+
+.budget-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+}
+
+.budget-content h2 {
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.badge {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.budget-tags span {
+  background: rgba(0,0,0,0.4);
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.budget-stats {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.stat {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.progress-bar {
+  height: 10px;
+  background: #eee;
+  border-radius: 10px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: #4a7c59;
+}
+
+.section-title {
+  margin-top: 30px;
+  font-family: serif;
+}
+
+.budget-list {
+  margin-top: 10px;
+}
+
+.item {
+  background: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  transition: 0.3s;
+}
+
+.item:hover {
+  transform: translateY(-3px);
+}
