@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes Favoris — NutriSmart</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="css/shared-styles.css">
+
+  <style>
+    body {
+      background: linear-gradient(rgba(247,243,236,0.9), rgba(247,243,236,0.9)),
+      url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1600&q=80") center/cover fixed;
+    }
+
+    .favorites-container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 5rem 2rem;
+    }
+
+    .favorites-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .favorites-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: var(--forest);
+    }
+
+    .favorites-header p {
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .favorite-card {
+      background: rgba(255,255,255,0.9);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: 0.3s;
+    }
+
+    .favorite-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .favorite-card img {
+      width: 100%;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .favorite-card h3 {
+      color: var(--forest);
+      margin-bottom: 0.5rem;
+    }
+
+    .favorite-card p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .card-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-remove {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.6rem 1rem;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+
+    .empty-state {
+      text-align: center;
+      margin-top: 3rem;
+      color: var(--gray);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR (copied from profile) -->
+  <nav>
+    <a href="nutrismart-website.html" class="nav-logo">
+      <span style="color:#4a7c59;">Nutri</span><span style="color:#8fbc8f;">Smart</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="nutrismart-website.html">Accueil</a></li>
+      <li><a href="suivi-statistiques.html">Suivi et Statistiques</a></li>
+      <li><a href="profile.html">Profil</a></li>
+      <li><a href="recette.html">Recettes</a></li>
+      <li><a href="favorites.html" class="active">Favoris</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-auth">
+      <a href="register.html" class="nav-cta">Commencer</a>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="favorites-container">
+
+    <!-- HEADER -->
+    <div class="favorites-header">
+      <h1>Mes Recettes Favoris</h1>
+      <p>Ajoutez, consultez et gérez vos recettes préférées.</p>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-card">
+      <h2 style="margin-bottom: 1.5rem;">Ajouter une recette</h2>
+
+      <form>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nom de la recette</label>
+            <input type="text" placeholder="Ex: Salade Healthy">
+          </div>
+
+          <div class="form-group">
+            <label>Calories (kcal)</label>
+            <input type="number" placeholder="Ex: 350">
+          </div>
+
+          <div class="form-group">
+            <label>Protéines (g)</label>
+            <input type="number" placeholder="Ex: 20">
+          </div>
+
+          <div class="form-group">
+            <label>Image (URL)</label>
+            <input type="text" placeholder="Lien de l'image">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea rows="3" placeholder="Décrivez la recette..."></textarea>
+        </div>
+
+        <button class="btn-primary">Ajouter aux favoris</button>
+      </form>
+    </div>
+
+    <!-- FAVORITES LIST -->
+    <section class="favorites-grid">
+
+      <!-- CARD 1 -->
+      <div class="favorite-card">
+        <img src="images/salade.jpg" alt="">
+        <h3>Salade Quinoa</h3>
+        <p>350 kcal • 12g protéines</p>
+
+        <div class="card-actions">
+          <button class="btn-primary btn-small">Voir</button>
+          <button class="btn-remove">Supprimer</button>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="favorite-card">
+        <img src="images/omelette.jpg" alt="">
+        <h3>Omelette Healthy</h3>
+        <p>250 kcal • 18g protéines</p>
+
+        <div class="card-actions">
+          <button class="btn-primary btn-small">Voir</button>
+          <button class="btn-remove">Supprimer</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state">
+      <p>Aucune recette favorite pour le moment.</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER (simplified) -->
+  <footer style="text-align:center; padding:2rem; color:gray;">
+    © 2026 NutriSmart — Tous droits réservés
+  </footer>
+
+</body>
+</html>
