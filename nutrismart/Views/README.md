@@ -72,3 +72,4 @@ git clone https://github.com/tasnimeabidi/Esprit-PW-2A20-2526-NutriSmart.git
 ## Josefine pages
     http://localhost/Esprit-PW-2A20-2526-NutriSmart/nutrismart/views/backoffice/budget-admin.php
    http://localhost/Esprit-PW-2A20-2526-NutriSmart/nutrismart/Views/frontoffice/budget-user.php?user_id=1
+   http://localhost/Esprit-PW-2A20-2526-NutriSmart/nutrismart/Views/frontoffice/user-achat.php?user_id=1
