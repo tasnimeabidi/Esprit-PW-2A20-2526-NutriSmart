@@ -208,7 +208,7 @@ body.bo-shell-body main.bo-shell-main {
   min-height: 0;
 }
 
-body.bo-shell-body main.bo-shell-main .app {
+body.bo-shell-body main.bo-shell-main .conteneur-principal {
   min-height: min-content;
 }
 
@@ -230,4 +230,176 @@ body.bo-shell-body main.bo-shell-main .app {
   body.bo-shell-body main.bo-shell-main {
     padding: 0.5rem;
   }
+}
+
+/* Page CRUD MCD (crud-plan-repas-sport.html) — thème indigo / ardoise */
+.bo-crud-page {
+  --bo-crud-accent: #4f46e5;
+  --bo-crud-accent-2: #6366f1;
+  --bo-crud-fg: #0f172a;
+  --bo-crud-muted: #64748b;
+  --bo-crud-border: rgba(15, 23, 42, 0.1);
+}
+
+.bo-crud-page .bo-crud-msg {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.85rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.65rem;
+  color: #312e81;
+  background: rgba(79, 70, 229, 0.1);
+  border: 1px solid rgba(79, 70, 229, 0.22);
+}
+
+.bo-crud-page .bo-crud-msg:empty {
+  display: none;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.bo-crud-page .bo-crud-msg--err {
+  color: #7f1d1d;
+  background: rgba(198, 40, 40, 0.08);
+  border-color: rgba(198, 40, 40, 0.25);
+}
+
+.bo-crud-page .bo-crud-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1.1rem;
+  padding: 0.3rem;
+  border-radius: 0.85rem;
+  background: rgba(15, 23, 42, 0.05);
+  border: 1px solid var(--bo-crud-border);
+}
+
+.bo-crud-page .bo-crud-tab {
+  font-family: var(--bo-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.5rem 0.95rem;
+  border-radius: 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--bo-crud-muted);
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.bo-crud-page .bo-crud-tab:hover {
+  color: var(--bo-crud-fg);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.bo-crud-page .bo-crud-tab.is-active {
+  background: #fff;
+  color: var(--bo-crud-accent);
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+}
+
+.bo-crud-page .btn-green {
+  background: linear-gradient(135deg, var(--bo-crud-accent), var(--bo-crud-accent-2)) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+.bo-crud-page .btn-green:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35) !important;
+}
+
+.bo-crud-page .btn-ghost {
+  border-color: rgba(79, 70, 229, 0.3) !important;
+  color: #3730a3 !important;
+}
+
+.bo-crud-page .btn-ghost:hover {
+  background: rgba(79, 70, 229, 0.08) !important;
+}
+
+.bo-crud-page .content-card + .content-card {
+  margin-top: 1rem;
+}
+
+.bo-crud-page .bo-crud-heading {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+  color: var(--bo-crud-fg);
+}
+
+.bo-crud-page .bo-crud-meta,
+.bo-crud-page .bo-crud-hint {
+  font-size: 0.78rem;
+  color: var(--bo-crud-muted);
+  margin: 0 0 0.75rem;
+}
+
+.bo-crud-page .bo-crud-hint {
+  font-family: var(--bo-mono);
+  color: var(--bo-crud-accent);
+}
+
+.bo-crud-page .bo-crud-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.bo-crud-page .bo-crud-form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bo-crud-muted);
+}
+
+.bo-crud-page .bo-crud-form-grid input,
+.bo-crud-page .bo-crud-form-grid select {
+  font-family: var(--bo-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--bo-crud-border);
+  border-radius: 0.45rem;
+  color: var(--bo-crud-fg);
+  background: #fff;
+}
+
+.bo-crud-page .bo-crud-form-grid input:focus,
+.bo-crud-page .bo-crud-form-grid select:focus {
+  outline: none;
+  border-color: var(--bo-crud-accent);
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.18);
+}
+
+.bo-crud-page .bo-crud-form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.bo-crud-page .bo-crud-table th,
+.bo-crud-page .bo-crud-table td {
+  font-size: 0.8rem;
+}
+
+.bo-crud-page .bo-crud-table th {
+  background: linear-gradient(180deg, rgba(79, 70, 229, 0.1) 0%, rgba(79, 70, 229, 0.05) 100%);
+  color: #312e81;
+  font-weight: 700;
+}
+
+.bo-crud-page .bo-crud-actions {
+  white-space: nowrap;
 }

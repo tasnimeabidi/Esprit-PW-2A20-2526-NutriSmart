@@ -44,25 +44,25 @@ body {
   font-family: "Playfair Display", Georgia, serif;
 }
 
-/* ========== Layout app ========== */
-.app {
+/* ========== Conteneur racine de page (pleine hauteur) ========== */
+.conteneur-principal {
   display: flex;
   min-height: 100vh;
 }
 
-/* Tableau de bord embarqué (back-office) : pleine largeur, sans sidebar */
-.app--embed-dash {
+/* Back-office : tableau de bord pleine largeur dans la zone centrale */
+.conteneur-principal--backoffice {
   flex-direction: column;
 }
 
-.app--embed-dash .main {
+.conteneur-principal--backoffice .main {
   flex: 1;
   width: 100%;
   max-width: none;
 }
 
-/* Front office : barre du haut (style proche login / liens horizontaux) */
-.app--fo-topnav {
+/* Front office membre : navigation horizontale en haut */
+.conteneur-principal--menu-haut {
   flex-direction: column;
   min-height: 100vh;
 }
@@ -151,6 +151,27 @@ body {
   opacity: 1;
 }
 
+.fo-topnav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #4a7c59;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+  padding: 0.85rem 1.7rem;
+  border-radius: 999px;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.fo-topnav-cta:hover {
+  background: #3f6d4e;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(74, 124, 89, 0.28);
+}
+
 .fo-topnav-user {
   display: flex;
   align-items: center;
@@ -174,7 +195,7 @@ body {
   color: var(--muted);
 }
 
-.app--fo-topnav .main {
+.conteneur-principal--menu-haut .main {
   flex: 1;
   width: 100%;
   max-width: none;
@@ -313,9 +334,24 @@ body {
   letter-spacing: -0.02em;
 }
 
-.plan-repas-page .nav-menu a.active {
+.ecran-plan-repas .nav-menu a.active,
+.ecran-programme-sport .nav-menu a.active {
   border-left: 4px solid #2d5a27;
   padding-left: calc(1rem - 4px);
+}
+
+/* Agrandir le logo sur Plan repas / Programme sport */
+.ecran-plan-repas .fo-topnav-brand .brand-mark svg,
+.ecran-programme-sport .fo-topnav-brand .brand-mark svg {
+  width: 48px;
+  height: 48px;
+}
+
+.ecran-plan-repas .fo-topnav-brand .brand-text,
+.ecran-programme-sport .fo-topnav-brand .brand-text {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 .icon-leaf {
@@ -1099,8 +1135,8 @@ body {
   margin-bottom: 0;
 }
 
-/* ========== Hero Plan Repas ========== */
-.hero-plan {
+/* ========== En-tête visuel plan repas (.plan-header) ========== */
+.plan-header {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -1109,7 +1145,7 @@ body {
   box-shadow: var(--shadow-card);
 }
 
-.hero-plan-bg {
+.plan-header .background {
   position: absolute;
   inset: 0;
   background: #3d5c3a
@@ -1117,7 +1153,7 @@ body {
     center / cover;
 }
 
-.hero-plan-overlay {
+.plan-header .overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -1127,14 +1163,14 @@ body {
   );
 }
 
-.hero-plan-inner {
+.plan-header .content {
   position: relative;
   z-index: 1;
   padding: 2rem 2.25rem;
   color: #fff;
 }
 
-.hero-plan .pill {
+.plan-header .pill {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -1144,12 +1180,12 @@ body {
   margin-bottom: 0.75rem;
 }
 
-.hero-plan .pill svg {
+.plan-header .pill svg {
   width: 16px;
   height: 16px;
 }
 
-.hero-plan h2 {
+.plan-header h2 {
   font-size: clamp(1.75rem, 3.5vw, 2.35rem);
   font-weight: 700;
 }
@@ -1280,7 +1316,7 @@ body {
 }
 
 @media (max-width: 720px) {
-  .app {
+  .conteneur-principal {
     flex-direction: column;
   }
   .sidebar {

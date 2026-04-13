@@ -107,10 +107,13 @@
         </div>
       </a>
       <ul class="nav-links">
-        <li><a href="plan-repas.html">Accueil</a></li>
+        <li><a href="nutrismart-website.html">Accueil</a></li>
         <li><a href="profile.html" class="active">Profil</a></li>
-
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="recette.html">Recette</a></li>
+        <li><a href="suivi-statistiques.html">Suivi statistique</a></li>
+        <li><a href="plan-repas.html">Plan repas</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="programme-sport.html">Programme sport</a></li>
       </ul>
       <div class="nav-auth">
         <a href="register.html" class="nav-cta">Commencer gratuitement</a>
@@ -125,43 +128,46 @@
         </header>
 
         <div class="form-card profile-card">
-          <form action="user.html">
+          <form id="form-profil" action="user.html" method="get" novalidate data-error-id="profil-form-error">
             <div class="form-grid">
               <div class="form-group">
-                <label>Âge</label>
+                <label for="profil-age">Âge</label>
                 <input
-                  type="number"
+                  id="profil-age"
+                  name="age"
+                  type="text"
+                  inputmode="numeric"
                   value=""
-                  required
-                  min="1"
-                  max="120"
                   placeholder="Tapez votre age"
                 />
               </div>
               <div class="form-group">
-                <label>Genre</label>
-                <select>
+                <label for="profil-genre">Genre</label>
+                <select id="profil-genre" name="genre">
                   <option>Aucune</option>
                   <option>Homme</option>
                   <option>Femme</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Poids Actuel (kg)</label>
+                <label for="profil-poids">Poids Actuel (kg)</label>
                 <input
-                  type="number"
-                  step="0.1"
+                  id="profil-poids"
+                  name="poids"
+                  type="text"
+                  inputmode="decimal"
                   value=""
-                  required
                   placeholder="Tapez votre poids"
                 />
               </div>
               <div class="form-group">
-                <label>Taille (cm)</label>
+                <label for="profil-taille">Taille (cm)</label>
                 <input
-                  type="number"
+                  id="profil-taille"
+                  name="taille"
+                  type="text"
+                  inputmode="numeric"
                   value=""
-                  required
                   placeholder="Tapez votre taille"
                 />
               </div>
@@ -349,5 +355,29 @@
         </div>
       </div>
     </footer>
+    <script src="js/nutrismart-saisie-auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var f = document.getElementById("form-profil");
+        if (!f || !window.NutriSmartSaisieAuth) return;
+        f.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var age = document.getElementById("profil-age");
+          var po = document.getElementById("profil-poids");
+          var ta = document.getElementById("profil-taille");
+          var msg = window.NutriSmartSaisieAuth.profil(
+            age ? age.value : "",
+            po ? po.value : "",
+            ta ? ta.value : ""
+          );
+          if (msg) {
+            window.NutriSmartSaisieAuth.afficherErreur(f, msg);
+            return;
+          }
+          window.NutriSmartSaisieAuth.afficherErreur(f, "");
+          window.location.href = f.getAttribute("action") || "user.html";
+        });
+      });
+    </script>
   </body>
 </html>

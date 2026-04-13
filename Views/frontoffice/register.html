@@ -98,10 +98,15 @@
       <ul class="nav-links">
         <li><a href="nutrismart-website.html">Accueil</a></li>
         <li><a href="profile.html">Profil</a></li>
-
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="recette.html">Recette</a></li>
+        <li><a href="suivi-statistiques.html">Suivi statistique</a></li>
+        <li><a href="plan-repas.html">Plan repas</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="programme-sport.html">Programme sport</a></li>
       </ul>
-      <div class="nav-auth"></div>
+      <div class="nav-auth">
+        <a href="register.html" class="nav-cta">Commencer gratuitement</a>
+      </div>
     </nav>
 
     <main class="auth-hero">
@@ -109,22 +114,22 @@
         <h2>Inscription</h2>
         <p>Commencez votre transformation nutritionnelle dès aujourd'hui.</p>
 
-        <form action="profile.html">
+        <form id="form-register" action="profile.html" method="get" novalidate data-error-id="register-form-error">
           <div class="form-group">
-            <label>Id-user</label>
-            <input type="text" placeholder="placez votre Id-user" required />
+            <label for="reg-id-user">Id-user</label>
+            <input id="reg-id-user" name="id_user" type="text" placeholder="placez votre Id-user" />
           </div>
           <div class="form-group">
-            <label>Nom complet</label>
-            <input type="text" placeholder="placez votre Nom" required />
+            <label for="reg-nom">Nom complet</label>
+            <input id="reg-nom" name="nom" type="text" placeholder="placez votre Nom" />
           </div>
           <div class="form-group">
-            <label>Adresse e-mail</label>
-            <input type="email" placeholder="jean@exemple.com" required />
+            <label for="reg-email">Adresse e-mail</label>
+            <input id="reg-email" name="email" type="text" autocomplete="email" placeholder="jean@exemple.com" />
           </div>
           <div class="form-group">
-            <label>Mot de passe personnalisé</label>
-            <input type="password" placeholder="••••••••" required />
+            <label for="reg-password">Mot de passe personnalisé</label>
+            <input id="reg-password" name="password" type="password" autocomplete="new-password" placeholder="••••••••" />
           </div>
           <button
             type="submit"
@@ -291,5 +296,31 @@
         </div>
       </div>
     </footer>
+    <script src="js/nutrismart-saisie-auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var f = document.getElementById("form-register");
+        if (!f || !window.NutriSmartSaisieAuth) return;
+        f.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var idU = document.getElementById("reg-id-user");
+          var nom = document.getElementById("reg-nom");
+          var em = document.getElementById("reg-email");
+          var pw = document.getElementById("reg-password");
+          var msg = window.NutriSmartSaisieAuth.register(
+            idU ? idU.value : "",
+            nom ? nom.value : "",
+            em ? em.value : "",
+            pw ? pw.value : ""
+          );
+          if (msg) {
+            window.NutriSmartSaisieAuth.afficherErreur(f, msg);
+            return;
+          }
+          window.NutriSmartSaisieAuth.afficherErreur(f, "");
+          window.location.href = f.getAttribute("action") || "profile.html";
+        });
+      });
+    </script>
   </body>
 </html>

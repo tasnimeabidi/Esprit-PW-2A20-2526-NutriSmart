@@ -1,0 +1,45 @@
+/**
+ * Affichage des erreurs de saisie (sans validation HTML5) — bordure + message sous le champ.
+ */
+.ns-saisie-input-invalid,
+.ns-saisie-input-invalid:focus {
+  border-color: #c62828 !important;
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.18) !important;
+  outline: none;
+}
+
+select.ns-saisie-input-invalid,
+select.ns-saisie-input-invalid:focus {
+  border-color: #c62828 !important;
+}
+
+.ns-saisie-field-msg {
+  color: #b71c1c;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin: 0.35rem 0 0;
+  padding: 0;
+}
+
+.bo-field .ns-saisie-field-msg,
+.bo-crud-form-grid label .ns-saisie-field-msg,
+.fo-crud-form-grid label .ns-saisie-field-msg {
+  display: block;
+}
+
+/* Activité verrouillée par page (ex. Pilates sur pilates-rejoindre) */
+.fo-crud-champ-lecture-seule {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border, #e8ece9);
+  border-radius: var(--radius-md, 14px);
+  background: #f1f5f2;
+  color: var(--text, #1a1f1c);
+  font: inherit;
+  cursor: default;
+}
+
+.bo-crud-form-grid .fo-crud-champ-lecture-seule {
+  padding: 0.45rem 0.65rem;
+}
