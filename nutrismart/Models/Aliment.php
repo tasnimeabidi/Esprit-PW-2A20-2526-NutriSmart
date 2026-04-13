@@ -35,21 +35,21 @@ class Aliment {
     }
 
     public function readAll() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id_aliment DESC";
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
     public function readOne() {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE id_aliment = :id LIMIT 1";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if($row) {
-            $this->id = $row['id_aliment'];
+            $this->id = $row['id'];
             $this->nom = $row['nom'];
             $this->categorie = $row['categorie'];
             $this->calories = $row['calories'];
@@ -71,7 +71,7 @@ class Aliment {
                       glucides = :glucides, 
                       lipides = :lipides,
                       prix = :prix
-                  WHERE id_aliment = :id";
+                  WHERE id = :id";
         
         $stmt = $this->conn->prepare($query);
 
@@ -88,7 +88,7 @@ class Aliment {
     }
 
     public function delete() {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id_aliment = :id";
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $this->id);
         return $stmt->execute();
