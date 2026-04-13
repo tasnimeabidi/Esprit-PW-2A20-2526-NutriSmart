@@ -1,102 +1,62 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact — NutriSmart</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="css/shared-styles.css" />
-    <style>
-      /* ── CONTACT HERO ── */
-      .contact-hero {
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion</title>
+  <link rel="stylesheet" href="css/shared-styles.css">
+
+  <style>
+      .auth-hero {
         min-height: 90vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 6rem 2rem;
         background: linear-gradient(
-            rgba(247, 243, 236, 0.8),
-            rgba(247, 243, 236, 0.8)
+            rgba(34, 60, 42, 0.6),
+            rgba(34, 60, 42, 0.6)
           ),
-          url("https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1600&q=80")
+          url("https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=1600&q=80")
             center/cover fixed;
+        padding: 4rem 2rem;
       }
 
-      .contact-container {
-        max-width: 1200px;
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1.2fr;
-        gap: 5rem;
-        align-items: center;
+      .auth-card {
+        text-align: center;
       }
 
-      .contact-info h1 {
+      .auth-card h2 {
         font-family: "Playfair Display", serif;
-        font-size: clamp(2rem, 4vw, 3.2rem);
+        font-size: clamp(2rem, 4vw, 2.8rem);
         font-weight: 900;
         color: var(--forest);
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-        animation: fadeUp 0.8s ease both;
+        margin-bottom: 0.5rem;
       }
 
-      .contact-info p {
-        font-size: 1.15rem;
+      .auth-card p {
         color: var(--gray);
-        line-height: 1.6;
-        margin-bottom: 3rem;
-        animation: fadeUp 0.8s 0.1s ease both;
-      }
-
-      .contact-details {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-        animation: fadeUp 0.8s 0.2s ease both;
-      }
-
-      .detail-item {
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
+        margin-bottom: 2.5rem;
         font-size: 1.05rem;
-        color: var(--forest);
-        font-weight: 600;
       }
 
-      .detail-icon {
-        width: 52px;
-        height: 52px;
-        background: var(--white);
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        font-size: 1.4rem;
+      .auth-footer {
+        margin-top: 2rem;
+        font-size: 0.95rem;
+        color: var(--gray);
       }
 
-      .contact-card.form-card {
-        max-width: 100%;
-        animation: fadeUp 0.8s 0.3s ease both;
-      }
-
-      @media (max-width: 950px) {
-        .contact-container {
-          grid-template-columns: 1fr;
-          gap: 4rem;
-        }
+      .auth-footer a {
+        color: var(--primary);
+        font-weight: 700;
+        text-decoration: none;
       }
     </style>
-  </head>
+</head>
 
-  <body>
-    <!-- NAV -->
-    <nav id="navbar">
-      <a href="nutrismart-website.html" class="nav-logo">
+<body>
+
+<nav id="navbar">
+      <a href="nutrismart-website.php" class="nav-logo">
+        <!-- logo -->
         <svg
           width="34"
           height="34"
@@ -133,75 +93,64 @@
         </div>
       </a>
       <ul class="nav-links">
-        <li><a href="nutrismart-website.html">Accueil</a></li>
-        <li><a href="suivi-statistiques.html">Suivi et Statistiques</a></li>
-        <li><a href="profile.html">Profil</a></li>
-        <li><a href="favorites.html">Favoris</a></li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-        <li><a href="recette.html">Recettes</a></li>
+        <li><a href="/ProjetNutrismart/Views/frontoffice/nutrismart-website.php">Accueil</a></li>
+        <li><a href="blog.php">Blog</a></li>
       </ul>
       <div class="nav-auth">
-        <a href="register.html" class="nav-cta">Commencer gratuitement</a>
+        <a href="/ProjetNutrismart/index.php?action=register" class="nav-cta">Commencer gratuitement</a>
       </div>
     </nav>
+    <main class="auth-hero">
+  <div class="form-card auth-card">
+    <h2>Connexion</h2>
+    <p>Connectez-vous pour accéder à votre espace NutriSmart.</p>
 
-    <main class="contact-hero">
-      <div class="contact-container">
-        <div class="contact-info">
-          <h1>Parlons de votre santé.<br />Une question ?</h1>
-          <p>
-            Notre équipe d'experts en nutrition est là pour vous guider.
-            Écrivez-nous, nous vous répondrons sous 24 heures.
-          </p>
-
-          <div class="contact-details">
-            <div class="detail-item">
-              <div class="detail-icon">✉️</div>
-              <span>support@nutrismart.demo</span>
-            </div>
-            <div class="detail-item">
-              <div class="detail-icon">📞</div>
-              <span>+216 12 345 678</span>
-            </div>
-            <div class="detail-item">
-              <div class="detail-icon">🏢</div>
-              <span>Tunis, Tunisie</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-card contact-card">
-          <form>
-            <div class="form-group">
-              <label>Votre Nom</label>
-              <input type="text" placeholder="Jean Dupont" required />
-            </div>
-            <div class="form-group">
-              <label>Adresse E-mail</label>
-              <input type="email" placeholder="votre@exemple.com" required />
-            </div>
-            <div class="form-group">
-              <label>Votre Message</label>
-              <textarea
-                rows="5"
-                placeholder="Comment pouvons-nous vous aider aujourd'hui ?"
-                required
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              class="btn-primary"
-              style="width: 100%; margin-top: 1rem"
-            >
-              Envoyer le message &rarr;
-            </button>
-          </form>
-        </div>
+    <form action="/ProjetNutrismart/index.php?action=login" method="POST">
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          name="email"
+          id="email" 
+          placeholder="nom@exemple.com" 
+          required
+        />
+        <small class="error-message" id="emailError"></small>
       </div>
-    </main>
 
-    <!-- FOOTER -->
-    <footer id="contact">
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input 
+          type="password" 
+          name="password"
+          id="password" 
+          placeholder="••••••••" 
+          required
+        />
+        <small class="error-message" id="passwordError"></small>
+      </div>
+
+      <button 
+        type="submit"
+        class="btn-primary"
+        style="width: 100%; margin-top: 1rem"
+      >
+        Se connecter →
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      Nouveau sur NutriSmart ? <a href="/ProjetNutrismart/index.php?action=register">Créer un compte</a>
+    </div>
+  </div>
+</main>
+
+<!-- JS file -->
+<script src="assets/js/login.js"></script>
+
+<footer id="contact">
       <div class="footer-inner">
         <div class="footer-brand">
           <div class="footer-logo">
@@ -350,5 +299,6 @@
         </div>
       </div>
     </footer>
+    
   </body>
 </html>

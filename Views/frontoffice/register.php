@@ -1,76 +1,121 @@
+<?php
+require_once __DIR__ . "/../../config/database.php";
+
+$message = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $name = isset($_POST["fullname"]) ? trim($_POST["fullname"]) : "";
+    $email = isset($_POST["email"]) ? trim($_POST["email"]) : "";
+    $passwordRaw = isset($_POST["password"]) ? trim($_POST["password"]) : "";
+    $confirmPassword = isset($_POST["confirmPassword"]) ? trim($_POST["confirmPassword"]) : "";
+
+    // VALIDATION
+    if (empty($name) || empty($email) || empty($passwordRaw) || empty($confirmPassword)) {
+        $message = "Tous les champs sont obligatoires.";
+    } elseif ($passwordRaw !== $confirmPassword) {
+        $message = "Les mots de passe ne correspondent pas.";
+    } else {
+
+        $password = password_hash($passwordRaw, PASSWORD_DEFAULT);
+
+        // CHECK EMAIL
+        $check = $conn->prepare("SELECT id_utilisateur FROM utilisateur WHERE email = ?");
+        $check->bind_param("s", $email);
+        $check->execute();
+        $result = $check->get_result();
+
+        if ($result->num_rows > 0) {
+            $message = "Email déjà utilisé.";
+        } else {
+
+            // INSERT (FIXED COLUMN NAMES)
+            $role = "user"; // default role
+
+            $stmt = $conn->prepare("INSERT INTO utilisateur (nom, email, mot_de_passe, role) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $name, $email, $password, $role);
+
+            if ($stmt->execute()) {
+                $message = "Compte créé avec succès !";
+            } else {
+                $message = "Erreur lors de la création.";
+            }
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profil — NutriSmart</title>
+    <title>Inscription — NutriSmart</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/shared-styles.css" />
     <style>
-      body {
-        background: linear-gradient(
-            rgba(247, 243, 236, 0.9),
-            rgba(247, 243, 236, 0.9)
-          ),
-          url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1600&q=80")
-            center/cover fixed;
-      }
-
-      .profile-hero {
+      .auth-hero {
         min-height: 90vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 6rem 2rem;
+        background: linear-gradient(
+            rgba(34, 60, 42, 0.65),
+            rgba(34, 60, 42, 0.65)
+          ),
+          url("https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1600&q=80")
+            center/cover fixed;
+        padding: 4rem 2rem;
       }
 
-      .profile-container {
-        max-width: 900px;
-        width: 100%;
-        z-index: 1;
-      }
-
-      .profile-header {
+      .auth-card {
         text-align: center;
-        margin-bottom: 3.5rem;
-        animation: fadeUp 0.8s ease both;
       }
 
-      .profile-header h1 {
+      .auth-card h2 {
         font-family: "Playfair Display", serif;
-        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-size: clamp(2rem, 4vw, 2.8rem);
         font-weight: 900;
         color: var(--forest);
-        line-height: 1.1;
+        margin-bottom: 0.5rem;
       }
 
-      .profile-header p {
+      .auth-card p {
         color: var(--gray);
-        font-size: 1.1rem;
-        margin-top: 0.8rem;
+        margin-bottom: 2.5rem;
+        font-size: 1.05rem;
       }
 
-      .form-card.profile-card {
-        max-width: 100%;
-        padding: 4rem;
-      }
-
-      .btn-update-container {
-        display: flex;
-        justify-content: flex-end;
+      .auth-footer {
         margin-top: 2rem;
+        font-size: 0.95rem;
+        color: var(--gray);
+      }
+
+      .auth-footer a {
+        color: var(--primary);
+        font-weight: 700;
+        text-decoration: none;
       }
     </style>
   </head>
 
-  <body>
+<?php if (!empty($_SESSION["error"])): ?>
+  <p style="color:red"><?= $_SESSION["error"] ?></p>
+  <?php unset($_SESSION["error"]); ?>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION["success"])): ?>
+  <p style="color:green"><?= $_SESSION["success"] ?></p>
+  <?php unset($_SESSION["success"]); ?>
+<?php endif; ?>
+<body>
     <!-- NAV -->
     <nav id="navbar">
       <a href="nutrismart-website.html" class="nav-logo">
-        <!-- logo -->
         <svg
           width="34"
           height="34"
@@ -107,101 +152,92 @@
         </div>
       </a>
       <ul class="nav-links">
-        <li><a href="nutrismart-website.html">Accueil</a></li>
-        <li><a href="suivi-statistiques.html">Suivi et Statistiques</a></li>
-        <li><a href="profile.html" class="active">Profil</a></li>
-        <li><a href="recette.html">Recettes</a></li>
-        <li><a href="favorites.html">Favoris</a></li>
-        
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="/ProjetNutrismart/Views/frontoffice/nutrismart-website.php">Accueil</a></li>
+        <li><a href="blog.php">Blog</a></li>
       </ul>
-      <div class="nav-auth">
-        <a href="register.html" class="nav-cta">Commencer gratuitement</a>
-      </div>
+      <div class="nav-auth"></div>
     </nav>
 
-    <main class="profile-hero">
-      <div class="profile-container">
-        <header class="profile-header">
-          <h1>Votre Profil Nutritionnel</h1>
-          <p>Optimisez vos résultats en personnalisant vos données de santé.</p>
-        </header>
+    <main class="auth-hero">
+      <div class="form-card auth-card">
+        <h2>Inscription</h2>
+        <p>Commencez votre transformation nutritionnelle dès aujourd'hui.</p>
+        <?php if (!empty($message)): ?>
+  <p style="color:red; font-weight:600; margin-bottom:1rem;">
+    <?= $message ?>
+  </p>
+<?php endif; ?>
 
-        <div class="form-card profile-card">
-          <form action="user.html">
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Âge</label>
-                <input
-                  type="number"
-                  value=""
-                  required
-                  min="1"
-                  max="120"
-                  placeholder="Tapez votre age"
-                />
-              </div>
-              <div class="form-group">
-                <label>Genre</label>
-                <select>
-                  <option>Aucune</option>
-                  <option>Homme</option>
-                  <option>Femme</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Poids Actuel (kg)</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value=""
-                  required
-                  placeholder="Tapez votre poids"
-                />
-              </div>
-              <div class="form-group">
-                <label>Taille (cm)</label>
-                <input
-                  type="number"
-                  value=""
-                  required
-                  placeholder="Tapez votre taille"
-                />
-              </div>
-            </div>
+?>
 
-            <div class="form-group" style="margin-top: 1.5rem">
-              <label>Objectif Principal</label>
-              <select>
-                <option value="aucune">Aucune</option>
-                <option>Maintien et Tonification</option>
-                <option>Perte de poids</option>
-                <option>Prise de masse musculaire</option>
-                <option>Santé métabolique</option>
-              </select>
-            </div>
+        <form action="/ProjetNutrismart/index.php?action=register" method="POST" id="registerForm" novalidate>
 
-            <div class="form-group">
-              <label>Préférences alimentaires</label>
-              <select>
-                <option value="aucune">Aucune</option>
-                <option value="vegetarien">Végétarien</option>
-                <option value="vegan">Vegan</option>
-                <option value="sans-gluten">Sans gluten</option>
-                <option value="sans-lactose">Sans lactose</option>
-                <option value="low-carb">Low carb</option>
-              </select>
-            </div>
+  <div class="form-group">
+    <label for="fullname">Nom complet</label>
+    <input 
+      type="text" 
+      name="fullname"
+      id="fullname"
+      placeholder="Votre nom complet" 
+      required 
+    />
+    <small class="error-message" id="nameError"></small>
+  </div>
 
-            <div class="btn-update-container">
-              <button type="submit" class="btn-primary btn-small">
-                Enregistrer les préférences &rarr;
-              </button>
-            </div>
-          </form>
+  <div class="form-group">
+    <label for="email">Adresse e-mail</label>
+    <input 
+      type="email" 
+      name="email"
+      id="email"
+      placeholder="jean@exemple.com" 
+      required 
+    />
+    <small class="error-message" id="emailError"></small>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Mot de passe</label>
+    <input 
+      type="password" 
+      name="password"
+      id="password"
+      placeholder="••••••••" 
+      required 
+    />
+    <small class="error-message" id="passwordError"></small>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword">Confirmer le mot de passe</label>
+    <input 
+      type="password" 
+      name="confirmPassword"
+      id="confirmPassword"
+      placeholder="••••••••" 
+      required 
+    />
+    <small class="error-message" id="confirmPasswordError"></small>
+  </div>
+
+  <button
+    type="submit"
+    class="btn-primary"
+    style="width: 100%; margin-top: 1rem"
+  >
+    Créer mon compte →
+  </button>
+
+</form>
+
+<script src="assets/js/register.js"></script>
+
+        <div class="auth-footer">
+          Déjà membre ?<a href="/ProjetNutrismart/index.php?action=login">Se connecter ici</a>
         </div>
       </div>
     </main>
+
     <!-- FOOTER -->
     <footer id="contact">
       <div class="footer-inner">
@@ -348,7 +384,6 @@
         <div class="footer-bottom-links">
           <a href="#">Confidentialité</a>
           <a href="#">CGU</a>
-          <a href="contact.html">Contact</a>
         </div>
       </div>
     </footer>
