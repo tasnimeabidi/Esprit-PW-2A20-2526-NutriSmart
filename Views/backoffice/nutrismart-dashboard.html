@@ -1029,90 +1029,47 @@
             <thead>
               <tr>
                 <th>Utilisateur</th>
-                <th>Module principal</th>
-                <th>Plans IA</th>
-                <th>Statut</th>
-                <th>Inscrit le</th>
+                <th>Rôle</th>
+                <th>Mot de passe</th>
+                <th>Age</th>
+                <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="user-cell">
-                    <div class="u-avatar" style="background:#3F51B5">S</div>
-                    <div>
-                      <div class="u-name">Sarah Benali</div>
-                      <div class="u-email">sarah.b@mail.com</div>
-                    </div>
-                  </div>
-                </td>
-                <td style="color:var(--muted);font-size:.78rem">Meal Planning</td>
-                <td style="font-family:var(--mono);font-size:.8rem;color:var(--primary)">14</td>
-                <td><span class="status-pill s-active">ACTIF</span></td>
-                <td style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">28/03/26</td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="user-cell">
-                    <div class="u-avatar" style="background:#F57C00">K</div>
-                    <div>
-                      <div class="u-name">Karim Mansouri</div>
-                      <div class="u-email">k.mansouri@mail.com</div>
-                    </div>
-                  </div>
-                </td>
-                <td style="color:var(--muted);font-size:.78rem">Progress Tracking</td>
-                <td style="font-family:var(--mono);font-size:.8rem;color:var(--primary)">7</td>
-                <td><span class="status-pill s-active">ACTIF</span></td>
-                <td style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">27/03/26</td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="user-cell">
-                    <div class="u-avatar" style="background:#00796B">L</div>
-                    <div>
-                      <div class="u-name">Lina Trabelsi</div>
-                      <div class="u-email">lina.t@mail.com</div>
-                    </div>
-                  </div>
-                </td>
-                <td style="color:var(--muted);font-size:.78rem">Recipes</td>
-                <td style="font-family:var(--mono);font-size:.8rem;color:var(--muted)">2</td>
-                <td><span class="status-pill s-pending">EN ATTENTE</span></td>
-                <td style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">26/03/26</td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="user-cell">
-                    <div class="u-avatar" style="background:#7B1FA2">M</div>
-                    <div>
-                      <div class="u-name">Mohamed Ghali</div>
-                      <div class="u-email">m.ghali@mail.com</div>
-                    </div>
-                  </div>
-                </td>
-                <td style="color:var(--muted);font-size:.78rem">Grocery & Budget</td>
-                <td style="font-family:var(--mono);font-size:.8rem;color:var(--primary)">21</td>
-                <td><span class="status-pill s-active">ACTIF</span></td>
-                <td style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">25/03/26</td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="user-cell">
-                    <div class="u-avatar" style="background:#E53935">R</div>
-                    <div>
-                      <div class="u-name">Rana Khelifi</div>
-                      <div class="u-email">rana.k@mail.com</div>
-                    </div>
-                  </div>
-                </td>
-                <td style="color:var(--muted);font-size:.78rem">Food & Nutrition</td>
-                <td style="font-family:var(--mono);font-size:.8rem;color:var(--muted)">0</td>
-                <td><span class="status-pill s-inactive">INACTIF</span></td>
-                <td style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">24/03/26</td>
-              </tr>
+            <tbody id="dashUsersBody">
+              <tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--muted)">Chargement...</td></tr>
             </tbody>
           </table>
+
+          <script>
+            (function() {
+              var tbody = document.getElementById('dashUsersBody');
+              fetch('api_users.php')
+                .then(function(r){ return r.json(); })
+                .then(function(users) {
+                  tbody.innerHTML = '';
+                  var list = users.slice(0, 5);
+                  if (!list.length) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem;color:var(--muted)">Aucun utilisateur.</td></tr>';
+                    return;
+                  }
+                  list.forEach(function(u) {
+                    var pw = u.password_hash || u.mot_de_passe || '';
+                    var tr = document.createElement('tr');
+                    tr.innerHTML =
+                      '<td><div class="user-cell"><div class="u-avatar" style="background:#3dba52">' + (u.nom||'?').charAt(0).toUpperCase() + '</div>' +
+                      '<div><div class="u-name">' + u.nom + '</div><div class="u-email">' + u.email + '</div></div></div></td>' +
+                      '<td><span class="status-pill s-active">' + u.role + '</span></td>' +
+                      '<td style="font-family:var(--mono);font-size:0.62rem;color:var(--primary);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + pw + '">' + (pw ? pw : '••••••••') + '</td>' +
+                      '<td style="color:var(--muted)">' + (u.age || '-') + '</td>' +
+                      '<td><a href="users.html" style="color:var(--primary);font-size:0.75rem;text-decoration:none">Voir →</a></td>';
+                    tbody.appendChild(tr);
+                  });
+                })
+                .catch(function() {
+                  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:1rem;color:var(--muted)">Requiert le serveur XAMPP.</td></tr>';
+                });
+            })();
+          </script>
         </div>
       </div>
 
