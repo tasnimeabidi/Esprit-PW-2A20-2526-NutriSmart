@@ -28,4 +28,23 @@ class AchatService {
         $stmt->execute([$userId]);
         return $stmt->fetchAll();
     }
+
+    public function getTotalDepensesByUserId($userId) {
+        $sql = "SELECT COALESCE(SUM(prix_total), 0) as total FROM user_achat WHERE id_utilisateur = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$userId]);
+        $result = $stmt->fetch();
+        return floatval($result['total']);
+    }
+
+    public function getAchatsByUserId($userId) {
+        $sql = "SELECT ua.*, a.nom as nom_aliment 
+                FROM user_achat ua 
+                JOIN aliment a ON ua.id_aliment = a.id 
+                WHERE ua.id_utilisateur = ? 
+                ORDER BY ua.date_achat DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$userId]);
+        return $stmt->fetchAll();
+    }
 }
